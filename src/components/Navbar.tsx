@@ -1,0 +1,106 @@
+"use client";
+
+import React, { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+import { routes } from "@/lib/routes";
+import { useNavDirection } from "./NavDirectionContext";
+
+export const Navbar = () => {
+    const pathname = usePathname();
+    const [expanded, setExpanded] = useState(false);
+    const { setDirection } = useNavDirection();
+    const wrapperRef = useRef<HTMLDivElement>(null);
+
+    const currentIndex = routes.findIndex((route) => route.path === pathname);
+    const current = routes[currentIndex === -1 ? 0 : currentIndex];
+
+    useEffect(() => {
+        setExpanded(false);
+    }, [pathname]);
+
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
+                setExpanded(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    const handleSelect = (index: number) => {
+        setDirection(index > currentIndex ? 1 : -1);
+    };
+
+    return (
+        <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center py-6 pointer-events-none">
+            <div
+                ref={wrapperRef}
+                className={twMerge(
+                    clsx(
+                        "relative flex items-center rounded-full pointer-events-auto overflow-hidden",
+                        "bg-black/40 backdrop-blur-2xl backdrop-saturate-150",
+                        "border border-white/10",
+                        "shadow-[0_8px_32px_0_rgba(0,0,0,0.5),inset_0_1px_1px_0_rgba(255,255,255,0.15)]"
+                    )
+                )}
+            >
+                {!expanded ? (
+                    <button
+                        onClick={() => setExpanded(true)}
+                        className="relative px-6 py-3 text-sm font-medium text-white"
+                    >
+                        <AnimatePresence mode="wait" initial={false}>
+                            <motion.span
+                                key={current.path}
+                                initial={{ y: 10, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                exit={{ y: -10, opacity: 0 }}
+                                transition={{ duration: 0.25 }}
+                                className="block"
+                            >
+                                {current.name}
+                            </motion.span>
+                        </AnimatePresence>
+                    </button>
+                ) : (
+                    <div className="flex items-center gap-1 px-2 py-2">
+                        {routes.map((route, index) => {
+                            const isActive = route.path === pathname;
+                            return (
+                                <Link
+                                    key={route.path}
+                                    href={route.path}
+                                    onClick={() => handleSelect(index)}
+                                    className="relative px-4 py-2 rounded-full text-sm font-medium"
+                                >
+                                    {isActive && (
+                                        <motion.span
+                                            layoutId="nav-active-pill"
+                                            className="absolute inset-0 rounded-full bg-white"
+                                            transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                                        />
+                                    )}
+                                    <span
+                                        className={twMerge(
+                                            "relative z-10 transition-colors duration-300",
+                                            isActive
+                                                ? "text-black"
+                                                : "text-zinc-300 hover:text-white"
+                                        )}
+                                    >
+                                        {route.name}
+                                    </span>
+                                </Link>
+                            );
+                        })}
+                    </div>
+                )}
+            </div>
+        </nav>
+    );
+};
