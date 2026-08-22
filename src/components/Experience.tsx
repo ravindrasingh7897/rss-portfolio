@@ -41,8 +41,8 @@ export const Experience = () => {
     ];
 
     return (
-        <section className="relative w-full min-h-screen flex flex-col pt-24 pb-32 px-6 md:px-16 overflow-hidden">
-            <div className="relative z-20 max-w-5xl mx-auto space-y-16 w-full">
+        <section className="relative w-full min-h-screen flex flex-col pt-24 pb-32 px-6 md:px-16 overflow-hidden pointer-events-none">
+            <div className="relative z-20 max-w-5xl mx-auto space-y-16 w-full pointer-events-auto">
                 <div className="space-y-4">
                     <h2 className="text-4xl md:text-5xl font-semibold tracking-tighter text-white">
                         Experience

@@ -34,7 +34,7 @@ export const SpaceBackground = () => {
     if (pathname === "/") return null;
 
     return (
-        <div className="fixed inset-0 w-full h-full z-0 overflow-hidden opacity-60 mix-blend-screen pointer-events-none">
+        <div className="fixed inset-0 w-full h-full z-0 overflow-hidden opacity-60 mix-blend-screen">
             <Canvas
                 camera={{ position: [0, 18.8, 6.8], fov: 60 }}
                 gl={{ alpha: true, antialias: true }}
