@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -13,7 +13,6 @@ export const Navbar = () => {
     const pathname = usePathname();
     const [expanded, setExpanded] = useState(false);
     const { setDirection } = useNavDirection();
-    const wrapperRef = useRef<HTMLDivElement>(null);
 
     const currentIndex = routes.findIndex((route) => route.path === pathname);
     const current = routes[currentIndex === -1 ? 0 : currentIndex];
@@ -22,24 +21,17 @@ export const Navbar = () => {
         setExpanded(false);
     }, [pathname]);
 
-    useEffect(() => {
-        const handleClickOutside = (e: MouseEvent) => {
-            if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
-                setExpanded(false);
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
-
     const handleSelect = (index: number) => {
         setDirection(index > currentIndex ? 1 : -1);
     };
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center py-6 pointer-events-none">
-            <div
-                ref={wrapperRef}
+            <motion.div
+                layout
+                onMouseEnter={() => setExpanded(true)}
+                onMouseLeave={() => setExpanded(false)}
+                transition={{ layout: { type: "spring", stiffness: 400, damping: 32 } }}
                 className={twMerge(
                     clsx(
                         "relative flex items-center rounded-full pointer-events-auto overflow-hidden",
@@ -49,58 +41,73 @@ export const Navbar = () => {
                     )
                 )}
             >
-                {!expanded ? (
-                    <button
-                        onClick={() => setExpanded(true)}
-                        className="relative px-6 py-3 text-sm font-medium text-white"
-                    >
-                        <AnimatePresence mode="wait" initial={false}>
-                            <motion.span
-                                key={current.path}
-                                initial={{ y: 10, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                exit={{ y: -10, opacity: 0 }}
-                                transition={{ duration: 0.25 }}
-                                className="block"
-                            >
-                                {current.name}
-                            </motion.span>
-                        </AnimatePresence>
-                    </button>
-                ) : (
-                    <div className="flex items-center gap-1 px-2 py-2">
-                        {routes.map((route, index) => {
-                            const isActive = route.path === pathname;
-                            return (
-                                <Link
-                                    key={route.path}
-                                    href={route.path}
-                                    onClick={() => handleSelect(index)}
-                                    className="relative px-4 py-2 rounded-full text-sm font-medium"
+                <AnimatePresence mode="popLayout" initial={false}>
+                    {!expanded ? (
+                        <motion.div
+                            key="collapsed"
+                            style={{ originX: 0.5 }}
+                            initial={{ opacity: 0, scale: 0.6 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.6 }}
+                            transition={{ duration: 0.25 }}
+                            className="px-6 py-3 text-sm font-medium text-white"
+                        >
+                            <AnimatePresence mode="wait" initial={false}>
+                                <motion.span
+                                    key={current.path}
+                                    initial={{ y: 10, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={{ y: -10, opacity: 0 }}
+                                    transition={{ duration: 0.25 }}
+                                    className="block"
                                 >
-                                    {isActive && (
-                                        <motion.span
-                                            layoutId="nav-active-pill"
-                                            className="absolute inset-0 rounded-full bg-white"
-                                            transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                                        />
-                                    )}
-                                    <span
-                                        className={twMerge(
-                                            "relative z-10 transition-colors duration-300",
-                                            isActive
-                                                ? "text-black"
-                                                : "text-zinc-300 hover:text-white"
-                                        )}
+                                    {current.name}
+                                </motion.span>
+                            </AnimatePresence>
+                        </motion.div>
+                    ) : (
+                        <motion.div
+                            key="expanded"
+                            style={{ originX: 0.5 }}
+                            initial={{ opacity: 0, scale: 0.6 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.6 }}
+                            transition={{ duration: 0.25 }}
+                            className="flex items-center gap-1 px-2 py-2"
+                        >
+                            {routes.map((route, index) => {
+                                const isActive = route.path === pathname;
+                                return (
+                                    <Link
+                                        key={route.path}
+                                        href={route.path}
+                                        onClick={() => handleSelect(index)}
+                                        className="relative px-4 py-2 rounded-full text-sm font-medium"
                                     >
-                                        {route.name}
-                                    </span>
-                                </Link>
-                            );
-                        })}
-                    </div>
-                )}
-            </div>
+                                        {isActive && (
+                                            <motion.span
+                                                layoutId="nav-active-pill"
+                                                className="absolute inset-0 rounded-full bg-white"
+                                                transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                                            />
+                                        )}
+                                        <span
+                                            className={twMerge(
+                                                "relative z-10 transition-colors duration-300",
+                                                isActive
+                                                    ? "text-black"
+                                                    : "text-zinc-300 hover:text-white"
+                                            )}
+                                        >
+                                            {route.name}
+                                        </span>
+                                    </Link>
+                                );
+                            })}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </motion.div>
         </nav>
     );
 };
