@@ -87,15 +87,21 @@ export const Navbar = () => {
                                         {isActive && (
                                             <motion.span
                                                 layoutId="nav-active-pill"
-                                                className="absolute inset-0 rounded-full bg-white"
-                                                transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                className="absolute inset-0 rounded-full bg-white/15 backdrop-blur-md border border-white/25 shadow-[inset_0_1px_1px_0_rgba(255,255,255,0.3)]"
+                                                transition={{
+                                                    layout: { type: "spring", stiffness: 350, damping: 30 },
+                                                    opacity: { duration: 0.2 },
+                                                }}
                                             />
                                         )}
                                         <span
                                             className={twMerge(
                                                 "relative z-10 transition-colors duration-300",
                                                 isActive
-                                                    ? "text-black"
+                                                    ? "text-white font-semibold"
                                                     : "text-zinc-300 hover:text-white"
                                             )}
                                         >
