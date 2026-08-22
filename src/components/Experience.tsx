@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { GlowCard } from "./GlowCard";
 
 export const Experience = () => {
     const roles = [
@@ -9,6 +10,8 @@ export const Experience = () => {
             title: "SDE",
             location: "On-Site",
             period: "November 2025 – Present",
+            glow: "from-blue-500 via-indigo-500 to-transparent",
+            tech: ["Next.js", "React", "FastAPI", "Celery", "Redis", "MySQL", "MongoDB", "Azure OpenAI", "Gemini"],
             points: [
                 "Co-built two GenAI-powered ESG & BRSR compliance platforms, cutting report preparation time from months to hours for 4-5 clients; independently designed and shipped the product's landing website.",
                 "Built a multi-provider LLM pipeline (Azure OpenAI, Google Gemini via AI Studio/Vertex AI for OCR + extraction) with Langfuse tracing and retry/backoff handling, powering document classification, checklist auto-mapping, and structured ESG data extraction.",
@@ -21,6 +24,8 @@ export const Experience = () => {
             title: "Tech Lead",
             location: "Remote",
             period: "March 2025 – August 2025",
+            glow: "from-fuchsia-500 via-purple-500 to-transparent",
+            tech: ["Vercel", "DigitalOcean", "Cloudinary", "VdoCipher", "Google OAuth", "Razorpay", "Nodemailer"],
             points: [
                 "Led end-to-end development of a scalable LMS, and deployed the platform to production using Vercel, DigitalOcean, and Cloudinary to serve 100+ users in the first month.",
                 "Streamed recorded lectures via VdoCipher DRM, enhancing engagement for 80%+ of enrolled learners.",
@@ -33,6 +38,8 @@ export const Experience = () => {
             title: "Front-end Developer",
             location: "Hybrid",
             period: "June 2024 – July 2024",
+            glow: "from-emerald-500 via-teal-500 to-transparent",
+            tech: ["React.js", "Tailwind CSS", "Multer", "MongoDB", "jsPDF"],
             points: [
                 "Built responsive, accessible UIs for 3+ client-facing apps using React.js and Tailwind CSS, and integrated RESTful APIs in collaboration with backend teams.",
                 "Engineered a full-featured Admin Panel with Excel export (xlsx), secure uploads (Multer), MongoDB, and PDF certificates (jsPDF).",
@@ -51,13 +58,8 @@ export const Experience = () => {
                 </div>
 
                 <div className="space-y-8">
-                    {roles.map((role) => (
-                        <div
-                            key={role.company}
-                            className="group relative flex flex-col p-8 md:p-10 rounded-3xl bg-zinc-900/40 border border-zinc-800/60 backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:border-zinc-700 hover:bg-zinc-800/40"
-                        >
-                            <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-
+                    {roles.map((role, index) => (
+                        <GlowCard key={role.company} glow={role.glow} index={index} className="p-8 md:p-10">
                             <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-2 mb-6">
                                 <div>
                                     <h3 className="text-2xl md:text-3xl tracking-tight font-semibold text-white">
@@ -72,7 +74,7 @@ export const Experience = () => {
                                 </span>
                             </div>
 
-                            <ul className="space-y-3">
+                            <ul className="space-y-3 mb-6">
                                 {role.points.map((point, i) => (
                                     <li
                                         key={i}
@@ -82,7 +84,18 @@ export const Experience = () => {
                                     </li>
                                 ))}
                             </ul>
-                        </div>
+
+                            <div className="flex flex-wrap gap-2">
+                                {role.tech.map((tag) => (
+                                    <span
+                                        key={tag}
+                                        className="text-xs font-medium px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-300"
+                                    >
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+                        </GlowCard>
                     ))}
                 </div>
             </div>
