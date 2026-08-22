@@ -1,16 +1,18 @@
 "use client";
 
 import React from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { useHeroLoading } from "./HeroLoadingContext";
 
 export const LoadingScreen = () => {
+    const pathname = usePathname();
     const { progress, isLoading } = useHeroLoading();
     const percent = Math.round(progress * 100);
 
     return (
         <AnimatePresence>
-            {isLoading && (
+            {pathname === "/" && isLoading && (
                 <motion.div
                     initial={{ opacity: 1 }}
                     exit={{ opacity: 0 }}

@@ -13,7 +13,11 @@ const HeroLoadingContext = createContext<HeroLoadingContextValue | null>(null);
 
 export const HeroLoadingProvider = ({ children }: { children: React.ReactNode }) => {
     const [progress, setProgress] = useState(0);
-    const [isLoading, setIsLoading] = useState(false);
+    // Defaults to true so the loading screen is present from the very
+    // first paint (including the server-rendered HTML), before any
+    // client effect has a chance to run. LoadingScreen only actually
+    // shows it on the Home route, so this is harmless elsewhere.
+    const [isLoading, setIsLoading] = useState(true);
 
     return (
         <HeroLoadingContext.Provider value={{ progress, isLoading, setProgress, setIsLoading }}>
