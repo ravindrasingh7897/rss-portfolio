@@ -6,6 +6,7 @@ import { PageArrows } from "@/components/PageArrows";
 import { PageTransition } from "@/components/PageTransition";
 import { NavDirectionProvider } from "@/components/NavDirectionContext";
 import { SocialLinks } from "@/components/SocialLinks";
+import { SpaceBackground } from "@/components/SpaceBackground";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} font-sans antialiased bg-[#000000] text-white`}>
         <NavDirectionProvider>
+          <SpaceBackground />
           <CustomCursor />
           <Navbar />
           <PageArrows />
