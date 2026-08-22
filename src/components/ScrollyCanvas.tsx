@@ -1,32 +1,18 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { MotionValue, useMotionValueEvent } from "framer-motion";
 
-export const ScrollyCanvas = ({ progress }: { progress: MotionValue<number> }) => {
+export const ScrollyCanvas = ({
+    progress,
+    images,
+    frameCount,
+}: {
+    progress: MotionValue<number>;
+    images: HTMLImageElement[];
+    frameCount: number;
+}) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [images, setImages] = useState<HTMLImageElement[]>([]);
-    const startFrame = 25;
-    const lastFrame = 191;
-    const frameCount = lastFrame - startFrame + 1;
-
-    useEffect(() => {
-        const loadedImages: HTMLImageElement[] = [];
-        let loadedCount = 0;
-
-        for (let i = 0; i < frameCount; i++) {
-            const frameNumber = String(startFrame + i).padStart(3, "0");
-            const img = new Image();
-            img.src = `/hero-frames/frame-${frameNumber}.png`;
-            img.onload = () => {
-                loadedCount++;
-                if (loadedCount === frameCount) {
-                    setImages(loadedImages);
-                }
-            };
-            loadedImages.push(img);
-        }
-    }, []);
 
     const renderFrame = (value: number) => {
         if (!canvasRef.current || images.length === 0) return;
