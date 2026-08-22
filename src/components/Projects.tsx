@@ -36,7 +36,7 @@ export const Projects = () => {
         <section className="relative w-full min-h-screen bg-[#000000] flex flex-col pt-24 pb-32 px-6 md:px-16 overflow-hidden">
             <SpaceBackground />
 
-            <div className="relative z-20 max-w-7xl mx-auto space-y-16 w-full">
+            <div className="relative z-20 max-w-5xl mx-auto space-y-16 w-full">
                 <div className="space-y-4">
                     <h2 className="text-4xl md:text-5xl font-semibold tracking-tighter text-white">
                         Selected Works
@@ -44,7 +44,7 @@ export const Projects = () => {
                     <div className="h-0.5 w-12 bg-white rounded-full" />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                <div className="space-y-8">
                     {cases.map((project, idx) => (
                         <a
                             key={idx}
@@ -68,7 +68,7 @@ export const Projects = () => {
                                 <h3 className="text-3xl tracking-tight font-semibold text-white group-hover:text-zinc-100 transition-colors">
                                     {project.title}
                                 </h3>
-                                <p className="text-zinc-400 font-light leading-relaxed max-w-sm">
+                                <p className="text-zinc-400 font-light leading-relaxed max-w-2xl">
                                     {project.desc}
                                 </p>
                             </div>
