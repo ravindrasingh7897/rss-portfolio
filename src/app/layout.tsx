@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans antialiased bg-[#121212] text-white`}>
+      <body className={`${inter.variable} font-sans antialiased bg-[#000000] text-white`}>
         <NavDirectionProvider>
           <CustomCursor />
           <Navbar />

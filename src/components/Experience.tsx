@@ -42,7 +42,7 @@ export const Experience = () => {
     ];
 
     return (
-        <section className="relative w-full min-h-screen bg-[#121212] flex flex-col pt-24 pb-32 px-6 md:px-16 overflow-hidden">
+        <section className="relative w-full min-h-screen bg-[#000000] flex flex-col pt-24 pb-32 px-6 md:px-16 overflow-hidden">
             <SpaceBackground />
 
             <div className="relative z-20 max-w-5xl mx-auto space-y-16 w-full">
