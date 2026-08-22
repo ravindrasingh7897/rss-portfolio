@@ -13,8 +13,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Scrollytelling Portfolio",
-  description: "A high-end personal portfolio built with Next.js and Canvas",
+  title: "Ravindra Singh | Software Developer",
+  description: "Portfolio of Ravindra Singh Shekhawat - Full-Stack & GenAI Software Developer",
 };
 
 export default function RootLayout({
