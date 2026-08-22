@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import { Navbar } from "@/components/Navbar";
 import { CustomCursor } from "@/components/CustomCursor";
 import { PageArrows } from "@/components/PageArrows";
-import { PageTransition } from "@/components/PageTransition";
 import { NavDirectionProvider } from "@/components/NavDirectionContext";
 import { SocialLinks } from "@/components/SocialLinks";
 import { SpaceBackground } from "@/components/SpaceBackground";
@@ -30,7 +29,7 @@ export default function RootLayout({
           <Navbar />
           <PageArrows />
           <SocialLinks />
-          <PageTransition>{children}</PageTransition>
+          {children}
         </NavDirectionProvider>
       </body>
     </html>
