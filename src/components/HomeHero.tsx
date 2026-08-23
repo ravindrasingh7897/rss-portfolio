@@ -8,7 +8,7 @@ import { useHeroLoading } from "./HeroLoadingContext";
 
 // Virtual scroll units needed to sweep through the sequence once.
 // Larger = slower, more cinematic pacing per direction.
-const SWEEP_RANGE = 12000;
+const SWEEP_RANGE = 9000;
 const TOUCH_MULTIPLIER = 3;
 const START_FRAME = 25;
 const LAST_FRAME = 191;
