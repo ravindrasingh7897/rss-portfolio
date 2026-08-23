@@ -40,7 +40,10 @@ const socials = [
 ];
 
 const iconButton =
-    "flex items-center justify-center h-10 w-10 rounded-full bg-black/40 backdrop-blur-2xl backdrop-saturate-150 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.5),inset_0_1px_1px_0_rgba(255,255,255,0.15)] text-white/70 hover:text-white hover:bg-black/60 transition-colors duration-300";
+    "group relative flex items-center justify-center h-10 w-10 rounded-full bg-black/40 backdrop-blur-2xl backdrop-saturate-150 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.5),inset_0_1px_1px_0_rgba(255,255,255,0.15)] text-white/70 hover:text-white hover:bg-black/60 transition-colors duration-300";
+
+const tooltip =
+    "pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-black/70 backdrop-blur-xl border border-white/10 px-3 py-1 text-[11px] font-medium tracking-wide text-white/90 opacity-0 translate-y-1 scale-95 transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100";
 
 export const SocialLinks = () => {
     return (
@@ -55,6 +58,7 @@ export const SocialLinks = () => {
                         aria-label={label}
                         className={iconButton}
                     >
+                        <span className={tooltip}>{label}</span>
                         <Icon size={17} />
                     </MagneticButton>
                 ))}
@@ -68,6 +72,7 @@ export const SocialLinks = () => {
                     aria-label="Buy me a tea"
                     className={iconButton}
                 >
+                    <span className={tooltip}>Buy me a tea</span>
                     <SiBuymeacoffee size={17} />
                 </MagneticButton>
                 <MagneticButton
@@ -76,6 +81,7 @@ export const SocialLinks = () => {
                     aria-label="Download resume"
                     className={iconButton}
                 >
+                    <span className={tooltip}>Resume</span>
                     <Download size={18} />
                 </MagneticButton>
             </div>
