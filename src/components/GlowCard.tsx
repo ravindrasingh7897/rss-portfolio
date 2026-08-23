@@ -3,6 +3,7 @@
 import React, { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { twMerge } from "tailwind-merge";
+import { useFinePointer } from "@/hooks/useFinePointer";
 
 type GlowCardProps = {
     children: React.ReactNode;
@@ -13,6 +14,7 @@ type GlowCardProps = {
 
 export const GlowCard = ({ children, glow, className }: GlowCardProps) => {
     const ref = useRef<HTMLDivElement>(null);
+    const isFinePointer = useFinePointer();
     const mouseX = useMotionValue(0.5);
     const mouseY = useMotionValue(0.5);
 
@@ -26,6 +28,7 @@ export const GlowCard = ({ children, glow, className }: GlowCardProps) => {
     });
 
     const handleMouseMove = (e: React.MouseEvent) => {
+        if (!isFinePointer) return;
         const rect = ref.current?.getBoundingClientRect();
         if (!rect) return;
         mouseX.set((e.clientX - rect.left) / rect.width);

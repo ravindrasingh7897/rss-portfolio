@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useFinePointer } from "@/hooks/useFinePointer";
 
 type CommonProps = {
     children: React.ReactNode;
@@ -32,8 +33,10 @@ export function MagneticButton({
 }: MagneticButtonProps) {
     const ref = useRef<HTMLElement>(null);
     const [pos, setPos] = useState({ x: 0, y: 0 });
+    const isFinePointer = useFinePointer();
 
     const handleMouseMove = (e: React.MouseEvent) => {
+        if (!isFinePointer) return;
         const rect = ref.current?.getBoundingClientRect();
         if (!rect) return;
         const relX = e.clientX - (rect.left + rect.width / 2);

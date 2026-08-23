@@ -2,16 +2,20 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useFinePointer } from "@/hooks/useFinePointer";
 
 const BASE_SIZE = 32;
 const MAGNET_PADDING = 12;
 
 export const CustomCursor = () => {
+    const isFinePointer = useFinePointer();
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [isHovering, setIsHovering] = useState(false);
     const [magnetRect, setMagnetRect] = useState<DOMRect | null>(null);
 
     useEffect(() => {
+        if (!isFinePointer) return;
+
         const updateMousePosition = (e: MouseEvent) => {
             setMousePosition({ x: e.clientX, y: e.clientY });
         };
@@ -46,7 +50,9 @@ export const CustomCursor = () => {
             window.removeEventListener("mousemove", updateMousePosition);
             window.removeEventListener("mouseover", handleMouseOver);
         };
-    }, []);
+    }, [isFinePointer]);
+
+    if (!isFinePointer) return null;
 
     const outerSize = magnetRect
         ? Math.max(magnetRect.width, magnetRect.height) + MAGNET_PADDING
