@@ -38,14 +38,14 @@ export const GlowCard = ({ children, glow, className }: GlowCardProps) => {
     };
 
     return (
-        <div style={{ perspective: 800 }}>
+        <div style={{ perspective: 800 }} className="h-full">
             <motion.div
                 ref={ref}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
                 style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
                 className={twMerge(
-                    "group relative rounded-3xl bg-zinc-900/40 border border-zinc-800/60 backdrop-blur-md overflow-hidden transition-colors duration-500 hover:border-zinc-700 hover:bg-zinc-800/40",
+                    "group relative h-full rounded-3xl bg-zinc-900/40 border border-zinc-800/60 backdrop-blur-md overflow-hidden transition-colors duration-500 hover:border-zinc-700 hover:bg-zinc-800/40",
                     className
                 )}
             >
