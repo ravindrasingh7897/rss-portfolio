@@ -14,12 +14,12 @@ import { FaXTwitter, FaLinkedin } from "react-icons/fa6";
 import { Download } from "lucide-react";
 import { MagneticButton } from "./MagneticButton";
 
-// TODO: replace these placeholders with the real links.
+// TODO: replace remaining placeholders with the real links.
 const LINKS = {
-    instagram: "#",
+    instagram: "https://instagram.com/rss_7897",
     x: "#",
-    linkedin: "#",
-    github: "#",
+    linkedin: "https://linkedin.com/in/rss7897",
+    github: "https://github.com/ravindrasingh7897",
     leetcode: "#",
     codeforces: "#",
     gmail: "mailto:ravindrasingh4632@gmail.com",
