@@ -11,7 +11,7 @@ type GlowCardProps = {
     className?: string;
 };
 
-export const GlowCard = ({ children, glow, index = 0, className }: GlowCardProps) => {
+export const GlowCard = ({ children, glow, className }: GlowCardProps) => {
     const ref = useRef<HTMLDivElement>(null);
     const mouseX = useMotionValue(0.5);
     const mouseY = useMotionValue(0.5);
@@ -38,13 +38,7 @@ export const GlowCard = ({ children, glow, index = 0, className }: GlowCardProps
     };
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, delay: 0.3 + index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-            style={{ perspective: 800 }}
-        >
+        <div style={{ perspective: 800 }}>
             <motion.div
                 ref={ref}
                 onMouseMove={handleMouseMove}
@@ -63,6 +57,6 @@ export const GlowCard = ({ children, glow, index = 0, className }: GlowCardProps
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                 {children}
             </motion.div>
-        </motion.div>
+        </div>
     );
 };
