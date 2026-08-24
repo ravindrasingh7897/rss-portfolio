@@ -76,7 +76,7 @@ export const Overlay = ({ progress }: { progress: MotionValue<number> }) => {
 
             <motion.div
                 style={{ opacity: opacity3, y: y3 }}
-                className="absolute inset-0 flex flex-col justify-center items-start p-6 md:p-24"
+                className="absolute inset-0 flex flex-col justify-start md:justify-center items-start px-6 pt-24 pb-6 md:p-24"
             >
                 <div className={`${panel} px-6 py-6 md:px-10 md:py-8 max-w-md md:max-w-xl`}>
                     <p className="text-xs uppercase tracking-widest text-zinc-500 mb-3">
@@ -101,7 +101,7 @@ export const Overlay = ({ progress }: { progress: MotionValue<number> }) => {
 
             <motion.div
                 style={{ opacity: opacity3, y: y3 }}
-                className="absolute inset-0 flex flex-col justify-center items-end text-right p-6 md:p-24"
+                className="absolute inset-0 flex flex-col justify-end md:justify-center items-end text-right px-6 pb-24 pt-6 md:p-24"
             >
                 <div className={`${panel} px-5 py-4 md:px-6 md:py-5 max-w-xs`}>
                     <h2 className="text-lg md:text-xl font-bold tracking-tight text-white">
