@@ -41,12 +41,12 @@ export const GlowCard = ({ children, glow, className }: GlowCardProps) => {
     };
 
     return (
-        <div style={{ perspective: 800 }} className="h-full">
+        <div style={isFinePointer ? { perspective: 800 } : undefined} className="h-full">
             <motion.div
                 ref={ref}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
-                style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+                style={isFinePointer ? { rotateX, rotateY, transformStyle: "preserve-3d" } : undefined}
                 className={twMerge(
                     "group relative h-full rounded-3xl bg-zinc-900/40 border border-zinc-800/60 backdrop-blur-md overflow-hidden transition-colors duration-500 hover:border-zinc-700 hover:bg-zinc-800/40",
                     className
