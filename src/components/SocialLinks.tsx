@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
     SiInstagram,
     SiGithub,
@@ -12,9 +12,9 @@ import {
 } from "react-icons/si";
 import { FaXTwitter, FaLinkedin } from "react-icons/fa6";
 import { AnimatePresence, motion } from "framer-motion";
-import { usePathname } from "next/navigation";
 import { Download, Link2, X } from "lucide-react";
 import { MagneticButton } from "./MagneticButton";
+import { useMobilePanel } from "./MobilePanelContext";
 
 // TODO: replace remaining placeholders with the real links.
 const LINKS = {
@@ -54,12 +54,8 @@ const tooltip =
     "pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-black/70 backdrop-blur-xl border border-white/10 px-3 py-1 text-[11px] font-medium tracking-wide text-white/90 opacity-0 translate-y-1 scale-95 transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100";
 
 export const SocialLinks = () => {
-    const pathname = usePathname();
-    const [mobileOpen, setMobileOpen] = useState(false);
-
-    useEffect(() => {
-        setMobileOpen(false);
-    }, [pathname]);
+    const { openPanel, setOpenPanel } = useMobilePanel();
+    const mobileOpen = openPanel === "social";
 
     return (
         <>
@@ -102,7 +98,7 @@ export const SocialLinks = () => {
             </div>
 
             <button
-                onClick={() => setMobileOpen((v) => !v)}
+                onClick={() => setOpenPanel(mobileOpen ? null : "social")}
                 aria-label={mobileOpen ? "Close links" : "Open links"}
                 className="md:hidden fixed top-6 right-4 z-[60] h-11 w-11 rounded-full flex items-center justify-center bg-black/40 backdrop-blur-2xl backdrop-saturate-150 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.5),inset_0_1px_1px_0_rgba(255,255,255,0.15)] text-white"
             >
@@ -116,7 +112,7 @@ export const SocialLinks = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            onClick={() => setMobileOpen(false)}
+                            onClick={() => setOpenPanel(null)}
                             className="md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
                         />
                         <motion.div
@@ -133,7 +129,7 @@ export const SocialLinks = () => {
                                     target={download ? undefined : "_blank"}
                                     rel={download ? undefined : "noopener noreferrer"}
                                     download={download}
-                                    onClick={() => setMobileOpen(false)}
+                                    onClick={() => setOpenPanel(null)}
                                     className="flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium text-zinc-300 hover:text-white hover:bg-white/5 transition-colors duration-200"
                                 >
                                     <Icon size={18} />

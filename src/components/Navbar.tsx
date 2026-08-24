@@ -9,11 +9,13 @@ import { twMerge } from "tailwind-merge";
 import { Menu, X } from "lucide-react";
 import { routes } from "@/lib/routes";
 import { useNavDirection } from "./NavDirectionContext";
+import { useMobilePanel } from "./MobilePanelContext";
 
 export const Navbar = () => {
     const pathname = usePathname();
     const [expanded, setExpanded] = useState(false);
-    const [mobileOpen, setMobileOpen] = useState(false);
+    const { openPanel, setOpenPanel } = useMobilePanel();
+    const mobileOpen = openPanel === "nav";
     const { setDirection } = useNavDirection();
 
     const currentIndex = routes.findIndex((route) => route.path === pathname);
@@ -21,7 +23,6 @@ export const Navbar = () => {
 
     useEffect(() => {
         setExpanded(false);
-        setMobileOpen(false);
     }, [pathname]);
 
     const handleSelect = (index: number) => {
@@ -31,7 +32,7 @@ export const Navbar = () => {
     return (
         <>
             <button
-                onClick={() => setMobileOpen((v) => !v)}
+                onClick={() => setOpenPanel(mobileOpen ? null : "nav")}
                 aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
                 className="md:hidden fixed top-6 left-4 z-[60] h-11 w-11 rounded-full flex items-center justify-center bg-black/40 backdrop-blur-2xl backdrop-saturate-150 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.5),inset_0_1px_1px_0_rgba(255,255,255,0.15)] text-white"
             >
@@ -45,7 +46,7 @@ export const Navbar = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            onClick={() => setMobileOpen(false)}
+                            onClick={() => setOpenPanel(null)}
                             className="md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
                         />
                         <motion.div
