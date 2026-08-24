@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import { usePathname } from "next/navigation";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useGLTF, Environment, OrbitControls } from "@react-three/drei";
+import { useGLTF, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 
 function SpaceModel() {
@@ -39,10 +39,7 @@ export const SpaceBackground = () => {
                 camera={{ position: [0, 18.8, 6.8], fov: 60 }}
                 gl={{ alpha: true, antialias: true }}
             >
-                <ambientLight intensity={0.5} />
-                <directionalLight position={[10, 10, 10]} intensity={1} />
                 <SpaceModel />
-                <Environment preset="city" />
                 <OrbitControls
                     enableZoom={false}
                     enablePan={false}

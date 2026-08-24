@@ -5,7 +5,7 @@ import { CustomCursor } from "@/components/CustomCursor";
 import { PageArrows } from "@/components/PageArrows";
 import { NavDirectionProvider } from "@/components/NavDirectionContext";
 import { SocialLinks } from "@/components/SocialLinks";
-import { SpaceBackground } from "@/components/SpaceBackground";
+import { SpaceBackground } from "@/components/SpaceBackgroundLazy";
 import { HeroLoadingProvider } from "@/components/HeroLoadingContext";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { MobilePanelProvider } from "@/components/MobilePanelContext";
@@ -25,6 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preload" href="/galaxy-model.glb" as="fetch" crossOrigin="anonymous" />
+      </head>
       <body className={`${inter.variable} font-sans antialiased bg-[#000000] text-white`}>
         <NavDirectionProvider>
           <HeroLoadingProvider>
