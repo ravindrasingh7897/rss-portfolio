@@ -6,12 +6,14 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { Menu, X } from "lucide-react";
 import { routes } from "@/lib/routes";
 import { useNavDirection } from "./NavDirectionContext";
 
 export const Navbar = () => {
     const pathname = usePathname();
     const [expanded, setExpanded] = useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
     const { setDirection } = useNavDirection();
 
     const currentIndex = routes.findIndex((route) => route.path === pathname);
@@ -19,6 +21,7 @@ export const Navbar = () => {
 
     useEffect(() => {
         setExpanded(false);
+        setMobileOpen(false);
     }, [pathname]);
 
     const handleSelect = (index: number) => {
@@ -26,7 +29,56 @@ export const Navbar = () => {
     };
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center py-6 pointer-events-none">
+        <>
+            <button
+                onClick={() => setMobileOpen((v) => !v)}
+                aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
+                className="md:hidden fixed top-6 left-4 z-[60] h-11 w-11 rounded-full flex items-center justify-center bg-black/40 backdrop-blur-2xl backdrop-saturate-150 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.5),inset_0_1px_1px_0_rgba(255,255,255,0.15)] text-white"
+            >
+                {mobileOpen ? <X size={19} /> : <Menu size={19} />}
+            </button>
+
+            <AnimatePresence>
+                {mobileOpen && (
+                    <React.Fragment key="mobile-nav">
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setMobileOpen(false)}
+                            className="md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+                        />
+                        <motion.div
+                            initial={{ x: "-100%" }}
+                            animate={{ x: 0 }}
+                            exit={{ x: "-100%" }}
+                            transition={{ type: "spring", stiffness: 320, damping: 32 }}
+                            className="md:hidden fixed top-0 left-0 bottom-0 z-50 w-72 max-w-[80%] flex flex-col gap-1 pt-24 px-6 bg-black/80 backdrop-blur-2xl border-r border-white/10"
+                        >
+                            {routes.map((route, index) => {
+                                const isActive = route.path === pathname;
+                                return (
+                                    <Link
+                                        key={route.path}
+                                        href={route.path}
+                                        onClick={() => handleSelect(index)}
+                                        className={twMerge(
+                                            "px-4 py-3 rounded-xl text-base font-medium transition-colors duration-200",
+                                            isActive
+                                                ? "bg-white/10 text-white"
+                                                : "text-zinc-300 hover:text-white hover:bg-white/5"
+                                        )}
+                                    >
+                                        {route.name}
+                                    </Link>
+                                );
+                            })}
+                        </motion.div>
+                    </React.Fragment>
+                )}
+            </AnimatePresence>
+
+            <nav className="hidden md:flex fixed top-0 left-0 right-0 z-50 justify-center py-6 pointer-events-none">
             <motion.div
                 layout
                 onMouseEnter={() => setExpanded(true)}
@@ -114,6 +166,7 @@ export const Navbar = () => {
                     )}
                 </AnimatePresence>
             </motion.div>
-        </nav>
+            </nav>
+        </>
     );
 };
